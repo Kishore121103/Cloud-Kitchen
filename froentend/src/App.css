@@ -1,0 +1,27 @@
+
+/* Input Fields */
+input[type='email'],
+input[type='password'],
+input[type='text'] {
+  width: 100%;          /* w-full */
+  display: block;       /* block */
+  margin: 0.5rem 0;     /* my-2 */
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 0.5rem;      /* p-2 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  background-color: #f3f4f6; /* bg-gray-100 */
+}
+
+/* Tabs Styling */
+div.tabs > * {
+  background-color: #d1d5db; /* bg-gray-300 */
+  color: #374151; /* text-gray-700 */
+  border-radius: 9999px; /* rounded-full */
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+}
+
+/* Active Tab */
+div.tabs > *.active {
+  color: white; /* text-white */
+  background-color:#f13a01 ; /* bg-[#f13a01] */
+}
