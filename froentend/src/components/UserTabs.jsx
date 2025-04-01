@@ -7,47 +7,59 @@ const UserTabs = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Debugging: Log raw localStorage data
-    console.log("Raw localStorage Data:", localStorage.getItem("user"));
-
     const loggedInUser = localStorage.getItem("user");
-
     if (loggedInUser) {
       try {
         const userData = JSON.parse(loggedInUser);
-
-        // Debugging: Log parsed user data
-        console.log("Parsed User Data:", userData);
-
         setUser(userData);
-
-        // Check if user is admin (ensure correct property case)
-        setIsAdmin(userData?.isAdmin === true);
+        setIsAdmin(userData?.IsAdmin === true || false);
       } catch (error) {
         console.error("Error parsing user data:", error);
       }
     }
-  }, [location]); // Re-run when location changes
+  }, [location]);
+
+  const formatEmail = (email) => {
+    if (!email) return '';
+    return email.split('@')[0];
+  };
 
   return (
     <div className="flex flex-col items-center p-6">
       {user && (
-        <div className="text-[#f13a01] text-2xl font-semibold text-center">
-          {user.name}
+        <div className="text-[#f13a01] text-5xl font-semibold text-center mb-6">
+          Profile
         </div>
       )}
 
       {isAdmin && (
-        <div className="mt-6 flex flex-col gap-4 text-center">
-          <Link to="/admin/categories" className="text-gray-700 hover:text-[#f13a01] transition-colors">
-            Categories
-          </Link>
-          <Link to="/admin/menu-items" className="text-gray-700 hover:text-[#f13a01] transition-colors">
-            Menu Items
-          </Link>
-          <Link to="/admin/users" className="text-gray-700 hover:text-[#f13a01] transition-colors">
-            Users
-          </Link>
+        <div className="w-full">
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex-1 min-w-[200px]">
+              <Link 
+                to="/admin/categories"
+                className="block w-full h-full p-4 text-white text-center rounded-lg bg-[#f13a01] hover:bg-[#e03500] transition-colors"
+              >
+                Categories
+              </Link>
+            </div>
+            <div className="flex-1 min-w-[200px]">
+              <Link 
+                to="/admin/menu-items"
+                className="block w-full h-full p-4 text-white text-center rounded-lg bg-[#f13a01] hover:bg-[#e03500] transition-colors"
+              >
+                Menu Items
+              </Link>
+            </div>
+            <div className="flex-1 min-w-[200px]">
+              <Link 
+                to="/admin/users"
+                className="block w-full h-full p-4 text-white text-center rounded-lg bg-[#f13a01] hover:bg-[#e03500] transition-colors"
+              >
+                Users
+              </Link>
+            </div>
+          </div>
         </div>
       )}
     </div>

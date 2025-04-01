@@ -66,7 +66,7 @@ const Profile = () => {
             <div className='flex flex-col items-center justify-center space-y-5 md:w-1/3'>
               <div className='w-52 h-52 rounded-full overflow-hidden border-2 border-gray-200 shadow-md mx-auto'>
                 <img 
-                  src="profile_img.jpeg" 
+                  src="profile_img.jpg" 
                   alt="Profile" 
                   className='w-full h-full object-cover'
                 />

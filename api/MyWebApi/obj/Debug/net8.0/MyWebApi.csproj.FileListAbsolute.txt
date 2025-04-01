@@ -103,3 +103,4 @@
 /Users/kishorekumar/Desktop/cloud kitchen/my-react-app/api/MyWebApi/obj/Debug/net8.0/MyWebApi.pdb
 /Users/kishorekumar/Desktop/cloud kitchen/my-react-app/api/MyWebApi/obj/Debug/net8.0/MyWebApi.genruntimeconfig.cache
 /Users/kishorekumar/Desktop/cloud kitchen/my-react-app/api/MyWebApi/obj/Debug/net8.0/ref/MyWebApi.dll
+/Users/kishorekumar/Desktop/cloud kitchen/my-react-app/api/MyWebApi/obj/Debug/net8.0/MyWebApi.sourcelink.json

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 
@@ -8,18 +8,9 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Redirect if already logged in
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      // Check if user is logged in before navigating
-      return; // Don't navigate if already logged in
-    }
-  }, []); // Only run on mount
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
-
     const loginData = { email, password };
 
     try {
@@ -37,19 +28,17 @@ export default function Login() {
       }
 
       const contentType = response.headers.get("content-type");
-      
       let userData;
       if (contentType && contentType.includes("application/json")) {
         userData = await response.json();
       } else {
-        userData = { email: email };
+        userData = { email };
       }
 
-      // Save user data to localStorage
       localStorage.setItem("user", JSON.stringify(userData));
-      
+
       alert("Login successful! Redirecting to home page...");
-      navigate("/"); // Only navigate after login success
+      navigate("/", { replace: true });  // Redirect after successful login
     } catch (err) {
       setError(err.message);
     }
@@ -77,7 +66,10 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="bg-[#f13a01] text-white my-4 px-6 py-2 rounded-full w-full">
+          <button 
+            type="submit" 
+            className="bg-[#f13a01] text-white my-4 px-6 py-2 rounded-full w-full"
+          >
             Login
           </button>
           {error && <p className="text-red-500">{error}</p>}

@@ -1,20 +1,31 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
-import './App.css';
+import React from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+import "./App.css";
 import CartPage from "./components/CartPage";
-import Profile from './pages/Profile';
-import Categories from './pages/Categories';
-import MenuItems from './pages/MenuItems';
-import Users from './pages/Users';
-import Home from './pages/Home';
-import Menu from './pages/Menu';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Profile from "./pages/Profile";
+import Categories from "./pages/Categories";
+import MenuItems from "./pages/MenuItems";
+import Users from "./pages/Users";
+import Home from "./pages/Home";
+import Menu from "./pages/Menu";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const isAuthenticated = () => {
-  return localStorage.getItem("user") !== null;
+  const user = localStorage.getItem("user");
+  return user && user !== "null";  // Check if user data exists
 };
+
+function ProtectedRoute({ children }) {
+  const location = useLocation();
+
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
+}
 
 function App() {
   return (
@@ -22,15 +33,15 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
-        {/* Redirect to login if not authenticated */}
-        <Route path="/" element={isAuthenticated() ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/menu" element={isAuthenticated() ? <Menu /> : <Navigate to="/login" />} />
-        <Route path="/profile" element={isAuthenticated() ? <Profile /> : <Navigate to="/login" />} />
-        <Route path="/categories" element={isAuthenticated() ? <Categories /> : <Navigate to="/login" />} />
-        <Route path="/menu-items" element={isAuthenticated() ? <MenuItems /> : <Navigate to="/login" />} />
-        <Route path="/users" element={isAuthenticated() ? <Users /> : <Navigate to="/login" />} />
-        <Route path="/cart" element={isAuthenticated() ? <CartPage /> : <Navigate to="/login" />} />
+
+        {/* Only allow access to protected routes if authenticated */}
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/menu" element={<ProtectedRoute><Menu /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+        <Route path="/menu-items" element={<ProtectedRoute><MenuItems /></ProtectedRoute>} />
+        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
       </Routes>
     </CartProvider>
   );
